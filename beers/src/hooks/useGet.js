@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import axios from "axios";
 
 const useGet = (url, params = {}, query = {}, options = {}) => {
@@ -12,26 +12,22 @@ const useGet = (url, params = {}, query = {}, options = {}) => {
 	);
 	const memoizedQuery = useMemo(() => query, [query]);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios({
-					method: "GET",
-					...memoizedConfig,
-					data: memoizedQuery,
-				});
-				setData(response.data);
-			} catch (error) {
-				setError(error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchData();
+	const fetchData = useCallback(async () => {
+		try {
+			const response = await axios({
+				method: "GET",
+				...memoizedConfig,
+				data: memoizedQuery,
+			});
+			setData(response.data);
+		} catch (error) {
+			setError(error);
+		} finally {
+			setLoading(false);
+		}
 	}, [memoizedConfig, memoizedQuery]);
 
-	return { data, error, loading };
+	return { fetchData, data, loading, error };
 };
 
 export default useGet;

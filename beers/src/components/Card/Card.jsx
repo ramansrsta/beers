@@ -1,13 +1,15 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Description from "../Description/Description";
 import { Box } from "@mui/material";
-import Image from "../Image/Image";
+import Image from "./Image/Image";
+import Description from "./Description/Description";
+import useCardStyles from "./useCardStyles";
 
 const ListCard = ({ title, subHeading, descriptionText, url, ingredients }) => {
+	const classes = useCardStyles();
 	return (
-		<Card>
+		<Card className={classes.card}>
 			<CardContent>
 				<Box
 					style={{
