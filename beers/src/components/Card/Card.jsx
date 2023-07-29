@@ -6,7 +6,13 @@ import Image from "./Image/Image";
 import Description from "./Description/Description";
 import useCardStyles from "./useCardStyles";
 
-const ListCard = ({ title, subHeading, descriptionText, url, ingredients }) => {
+const ListCard = ({
+	title,
+	subHeading,
+	descriptionText,
+	url,
+	ingredients = {},
+}) => {
 	const classes = useCardStyles();
 	return (
 		<Card className={classes.card}>

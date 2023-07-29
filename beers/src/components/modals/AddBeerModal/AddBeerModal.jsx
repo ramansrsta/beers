@@ -9,9 +9,42 @@ import { Box } from "@mui/material";
 
 const imgUrl = new URL("../../../assets/houzzBeer.png", import.meta.url).href;
 
-const AddBeerModal = ({ open, handleClose }) => {
+const AddBeerModal = ({ open, handleClose, setMyBeers }) => {
+	const [name, setName] = React.useState("");
+	const [tagline, setTagLing] = React.useState("");
+	const [description, setDescription] = React.useState("");
+
+	const handleCancel = () => {
+		handleClose();
+		setName("");
+		setTagLing("");
+		setDescription("");
+	};
+
+	const handleSave = () => {
+		const payload = {
+			name,
+			tagline,
+			description,
+		};
+
+		setMyBeers((prev) => [...prev, payload]);
+		handleCancel();
+	};
+
+	const handleNameChange = (e) => {
+		setName(e.target.value);
+	};
+
+	const handleTagLineChange = (e) => {
+		setTagLing(e.target.value);
+	};
+
+	const handleDescriptionChange = (e) => {
+		setDescription(e.target.value);
+	};
 	return (
-		<Dialog open={open} onClose={handleClose} fullWidth>
+		<Dialog open={open} onClose={handleCancel} fullWidth>
 			<DialogTitle>
 				<Box
 					style={{
@@ -36,6 +69,8 @@ const AddBeerModal = ({ open, handleClose }) => {
 				</Box>
 				<TextField
 					autoFocus
+					value={name}
+					onChange={handleNameChange}
 					margin="dense"
 					id="name"
 					label="Beer Name"
@@ -46,6 +81,8 @@ const AddBeerModal = ({ open, handleClose }) => {
 				<TextField
 					autoFocus
 					margin="dense"
+					value={tagline}
+					onChange={handleTagLineChange}
 					id="genre"
 					label="Genere"
 					type="type"
@@ -55,6 +92,8 @@ const AddBeerModal = ({ open, handleClose }) => {
 				<TextField
 					autoFocus
 					margin="dense"
+					name={description}
+					onChange={handleDescriptionChange}
 					id="description"
 					multiline
 					rows={4}
@@ -65,10 +104,10 @@ const AddBeerModal = ({ open, handleClose }) => {
 				/>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleClose} style={{ color: "gray" }}>
+				<Button onClick={handleCancel} style={{ color: "gray" }}>
 					Cancel
 				</Button>
-				<Button onClick={handleClose} variant="contained">
+				<Button onClick={handleSave} variant="contained" disabled={name === ""}>
 					Save
 				</Button>
 			</DialogActions>

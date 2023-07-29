@@ -5,6 +5,7 @@ const useTabs = () => {
 	const [value, setValue] = React.useState(0);
 	const [page, setPage] = React.useState(1);
 	const [open, setOpen] = React.useState(false);
+	const [myBeers, setMyBeers] = React.useState([]);
 
 	const queryParams = {
 		page: page,
@@ -42,6 +43,8 @@ const useTabs = () => {
 		handleClickOpen,
 		handleClose,
 		open,
+		myBeers,
+		setMyBeers,
 	};
 };
 

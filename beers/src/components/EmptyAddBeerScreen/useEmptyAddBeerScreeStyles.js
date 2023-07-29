@@ -9,7 +9,7 @@ const useEmptyAddBeerScreeStyles = makeStyles((theme) => ({
 	container: {
 		width: "100%",
 		height: "84.5vh",
-		background: "gray",
+		background: "lightgray",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",

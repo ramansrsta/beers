@@ -9,6 +9,9 @@ import useTabStyles from "./useTabStyles";
 import AddBeerModal from "../modals/AddBeerModal/AddBeerModal";
 import EmptyAddBeerScree from "../EmptyAddBeerScreen/EmptyAddBeerScree";
 
+const url_for_image = new URL("../../assets/houzzBeer.png", import.meta.url)
+	.href;
+
 export default function BeerTabs() {
 	const classes = useTabStyles();
 	const {
@@ -21,6 +24,8 @@ export default function BeerTabs() {
 		handleClickOpen,
 		handleClose,
 		open,
+		myBeers,
+		setMyBeers,
 	} = useTabs();
 
 	if (error) return <Loading text="Error Loading Data..." />;
@@ -34,7 +39,11 @@ export default function BeerTabs() {
 
 	return (
 		<>
-			<AddBeerModal open={open} handleClose={handleClose} />
+			<AddBeerModal
+				open={open}
+				handleClose={handleClose}
+				setMyBeers={setMyBeers}
+			/>
 			<Box mt={10}>
 				<Box mb={2}>
 					<Box className={classes.containerStyle}>
@@ -96,7 +105,24 @@ export default function BeerTabs() {
 
 				{value === 1 && (
 					<Box>
-						<EmptyAddBeerScree onClick={handleClickOpen} />
+						{myBeers?.length > 0 ? (
+							<Grid container spacing={2}>
+								{myBeers?.map((beer, index) => (
+									<Grid key={index} item md={12} sm={6}>
+										<Box mb={2}>
+											<ListCard
+												title={beer?.name}
+												subHeading={beer?.tagline}
+												descriptionText={beer?.description}
+												url={url_for_image}
+											/>
+										</Box>
+									</Grid>
+								))}
+							</Grid>
+						) : (
+							<EmptyAddBeerScree onClick={handleClickOpen} />
+						)}
 					</Box>
 				)}
 			</Box>
